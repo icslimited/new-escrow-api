@@ -17,15 +17,17 @@ use App\Http\Controllers\AuthController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/verify-account', [AuthController::class, 'verifyAccount']);
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
+Route::post('/contact-us', [AuthController::class, 'contactUs']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [AuthController::class, 'logout']);
-});
 
-// Forgot password
-// Reset password
-// socialmedia login
-// Socialmedia register
+    // Setup user profile
+    Route::post('updateorcreateprofile', [AuthController::class, 'updateorcreateprofile']);
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
