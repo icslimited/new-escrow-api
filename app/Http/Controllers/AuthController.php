@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Str;
 use App\Notifications\UserNotification;
+use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -148,18 +149,51 @@ class AuthController extends Controller
     }
 
     //
-    public function verifyAccounts(Request $request){
+    public function contactus(Request $request){
+        try {
+            $request->validate([
+                'fullname' => 'required|string',
+                'email' => 'required|email',
+                'phone_no' => 'required|numeric|min:10',
+                'message' => 'required|string'
+            ]);
+
+            Mail::send('emails.contact', [
+                'fullname' => $request->fullname,
+                'email' => $request->email,
+                'phone_no' => $request->phone_no, 
+                'messages' => $request->message ],
+                function ($message) {
+                        $message->from('dayoolapeju@gmail.com');
+                        $message->to('dayoolapeju@gmail.com', 'Your Name')
+                                ->subject('BCT Escrow Website Contact Form');
+            });
+
+            return response()->json(['success' => true, 'message' => 'Email sent successfully' ], 200);
+
+        } catch (Exception $ex) {
+            return response()->json(['success' => false, 'errors' => array('message' => $ex.getMessage()) ], 500);
+        }
+    }
+
+    //
+    public function updateorcreateprofile(Request $request){
         try {
             // Verify Account
             $fields = $request->validate([
-                'first_name' => 'required|string',
-                'last_name' => 'required|string',
-                'other_name' => 'required|string',
-                'phone_number' => 'required|string',
-                'residential_address' => 'required|string',
-                'state' => 'required|string',
-                'lga' => 'required|string',
+                'user_id' => 'nullable|exists:users,id',
+                'first_name' => 'nullable|string',
+                'last_name' => 'nullable|string',
+                'other_name' => 'nullable|string',
+                'phone_number' => 'nullable|numeric|min:10',
+                'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'residential_address' => 'nullable|string',
+                'state' => 'nullable|string',
+                'lga' => 'nullable|string'
             ]);
+
+            // User profile
+
 
         } catch (Exception $ex) {
             return response()->json(['success' => false, 'errors' => array('message' => $ex.getMessage()) ], 500);

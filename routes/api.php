@@ -20,7 +20,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/verify-account', [AuthController::class, 'verifyAccount']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
-Route::post('/contact-us', [AuthController::class, 'contactUs']);
+Route::post('/contact-us', [AuthController::class, 'contactus']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [AuthController::class, 'logout']);
