@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // Setup user profile
-    Route::post('updateorcreateprofile', [AuthController::class, 'updateorcreateprofile']);
+    Route::post('updateorcreateprofile', [UserProfileController::class, 'updateorcreateprofile']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

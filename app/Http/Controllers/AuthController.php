@@ -175,28 +175,4 @@ class AuthController extends Controller
             return response()->json(['success' => false, 'errors' => array('message' => $ex.getMessage()) ], 500);
         }
     }
-
-    //
-    public function updateorcreateprofile(Request $request){
-        try {
-            // Verify Account
-            $fields = $request->validate([
-                'user_id' => 'nullable|exists:users,id',
-                'first_name' => 'nullable|string',
-                'last_name' => 'nullable|string',
-                'other_name' => 'nullable|string',
-                'phone_number' => 'nullable|numeric|min:10',
-                'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'residential_address' => 'nullable|string',
-                'state' => 'nullable|string',
-                'lga' => 'nullable|string'
-            ]);
-
-            // User profile
-
-
-        } catch (Exception $ex) {
-            return response()->json(['success' => false, 'errors' => array('message' => $ex.getMessage()) ], 500);
-        }
-    }
 }
