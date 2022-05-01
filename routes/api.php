@@ -16,6 +16,7 @@ use App\Http\Controllers\UserProfileController;
 |
 */
 
+Route::get('/test', fn() => 'hello');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/verify-account', [AuthController::class, 'verifyAccount']);
@@ -27,7 +28,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // Setup user profile
-    Route::post('updateorcreateprofile', [UserProfileController::class, 'updateorcreateprofile']);
+    Route::post('update-profile', [UserProfileController::class, 'updateorcreateprofile']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

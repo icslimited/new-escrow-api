@@ -34,7 +34,7 @@ class UserProfileController extends Controller
             }
 
             //
-            $userprofile = UserProfile::create($fields);
+            $userprofile = UserProfile::updateOrCreate(['user_id' => $request->user()->id], $fields);
 
             DB::commit();
 

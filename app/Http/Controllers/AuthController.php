@@ -51,7 +51,7 @@ class AuthController extends Controller
                 return response()->json(['success' => false, 'error' => $error], 401);
             }
 
-            $user = User::where('email', $fields['email'])->first();
+            $user = User::where('email', $fields['email'])->first()->load('userprofile');
             $token = auth()->user()->createToken('authToken')->plainTextToken;
 
             return response()->json(['success' => true, 'user' => $user, 'token' => $token], 200);
